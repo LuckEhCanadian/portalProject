@@ -1,9 +1,9 @@
-#Portal Proposal
+# Portal Proposal
 
-##Description
+## Description
 I am looking to continue my grid based assignment to make a grid based top down portal game. Most of the base fucntionality is done but more content needs to be added. I'm looking to add boxes and more chambers among other things. 
 
-##Need to have list
+## Need to have list
 -Functional portals
 -Walls
 -Buttons
@@ -12,7 +12,7 @@ I am looking to continue my grid based assignment to make a grid based top down 
 -Some level of legitimate difficulty
 -GLaDOS voice lines somewhere in there
 
-##Nice to have
+## Nice to have
 -Boxes
 -Pressure plates that need boxes to activate
 -A menu

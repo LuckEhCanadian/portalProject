@@ -248,13 +248,11 @@ function mousePressed(){
       grid[orangeY][orangeX] = "button";
       orangeY = 1;
       orangeX = 1;
-      portalColor += 1;
     }
     else if(grid[orangeY][orangeY] === "door"){
       grid[orangeY][orangeX] = "door";
       orangeY = 1;
       orangeX = 1;
-      portalColor += 1;
     }
     else{
       grid[orangeY][orangeX] = "wall";
@@ -275,13 +273,11 @@ function mousePressed(){
       grid[blueY][blueX] = "button";
       blueY = 1;
       blueX = 1;
-      portalColor += 1;
     }
     else if(grid[blueY][blueY] === "door"){
       grid[blueY][blueX] = "door";
       blueY = 1;
       blueX = 1;
-      portalColor += 1;
     }
     else{
       grid[blueY][blueX] = "wall";

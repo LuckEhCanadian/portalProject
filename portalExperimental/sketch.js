@@ -236,60 +236,8 @@ function keyPressed(){
 //this is mostly placing portals although there will probably be more in the final project
 function mousePressed(){
   let cellSize = width/cols;
-  if(portalColor === 1){
-    grid[orangeY][orangeX] = 0;
-    orangeY = floor(mouseY / cellSize);
-    orangeX = floor(mouseX / cellSize);
-    if (grid[orangeY][orangeX] != "wall"&& grid[orangeY][orangeX] != "door" && grid[orangeY][orangeX] != "button"){
-      grid[orangeY][orangeX] = "portalO";
-      portalColor -= 1;
-    }
-    else if(grid[orangeY][orangeY] === "button"){
-      grid[orangeY][orangeX] = "button";
-      orangeY = 1;
-      orangeX = 1;
-      portalColor += 1;
-    }
-    else if(grid[orangeY][orangeY] === "door"){
-      grid[orangeY][orangeX] = "door";
-      orangeY = 1;
-      orangeX = 1;
-      portalColor += 1;
-    }
-    else{
-      grid[orangeY][orangeX] = "wall";
-      orangeY = 1;
-      orangeX = 1;
-      portalColor -= 1;
-    }
-  }
-  else if (portalColor === 0){
-    grid[blueY][blueX] = 0;
-    blueY = floor(mouseY / cellSize);
-    blueX = floor(mouseX / cellSize);
-    if (grid[blueY][blueX] != "wall"&& grid[blueY][blueX] != "door" && grid[blueY][blueX] != "button"){
-      grid[blueY][blueX] = "portalB";
-      portalColor += 1;
-    }
-    else if(grid[blueY][blueY] === "button"){
-      grid[blueY][blueX] = "button";
-      blueY = 1;
-      blueX = 1;
-      portalColor += 1;
-    }
-    else if(grid[blueY][blueY] === "door"){
-      grid[blueY][blueX] = "door";
-      blueY = 1;
-      blueX = 1;
-      portalColor += 1;
-    }
-    else{
-      grid[blueY][blueX] = "wall";
-      blueY = 1;
-      blueX = 1;
-      portalColor += 1;
-    }
-  }
+  blueX = floor(mouseX/cellsize);
+  blueY = playerY;
 }
 
 //this is where i make each different room

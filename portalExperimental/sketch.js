@@ -17,7 +17,7 @@ let blueX=2;
 let blueY=2;
 let cellSize;
 let playerPos;
-let portalColor;
+let portalColor = 0;
 let pressed = false;
 
 //Setup loop where i make the game not explode when it opens
@@ -170,21 +170,41 @@ function keyPressed(){
     }
     else{
       if(grid[playerY][playerX+1] === grid[blueY][blueX]){
-        if (grid[orangeY][orangeX+1] === "wall"){
-        }
-        else{
-          grid[playerY][playerX] = 0;
+        grid[playerY][playerX] = 0;
+        if(grid[orangeX-1][orangeY] === "wall"){
           playerY = orangeY;
           playerX = orangeX+1;
         }
+        else if(grid[orangeX+1][orangeY] === "wall"){
+          playerY = orangeY;
+          playerX = orangeX-1;
+        }
+        else if(grid[orangeX][orangeY-1] === "wall"){
+          playerY = orangeY+1;
+          playerX = orangeX;
+        }
+        else if(grid[orangeX][orangeY+1] === "wall"){
+          playerY = orangeY-1;
+          playerX = orangeX;
+        }
       }
       else if(grid[playerY][playerX+1] === grid[orangeY][orangeX]){
-        if (grid[blueY][blueX+1] === "wall"){
-        }
-        else{
-          grid[playerY][playerX] = 0;
+        grid[playerY][playerX] = 0;
+        if(grid[blueX-1][blueY] === "wall"){
           playerY = blueY;
           playerX = blueX+1;
+        }
+        else if(grid[blueX+1][blueY] === "wall"){
+          playerY = blueY;
+          playerX = blueX-1;
+        }
+        else if(grid[blueX][blueY-1] === "wall"){
+          playerY = blueY+1;
+          playerX = blueX;
+        }
+        else if(grid[blueX][blueY+1] === "wall"){
+          playerY = blueY-1;
+          playerX = blueX;
         }
       }
       else{
@@ -207,21 +227,41 @@ function keyPressed(){
     }
     else{
       if(grid[playerY][playerX-1] === grid[blueY][blueX]){
-        if (grid[orangeY][orangeX-1] === "wall"){
+        grid[playerY][playerX] = 0;
+        if(grid[orangeX+1][orangeY] === "wall"){
+          playerY = orangeY;
+          playerX = orangeX+1;
         }
-        else{
-          grid[playerY][playerX] = 0;
+        if(grid[orangeX-1][orangeY] === "wall"){
           playerY = orangeY;
           playerX = orangeX-1;
         }
+        else if(grid[orangeX][orangeY-1] === "wall"){
+          playerY = orangeY+1;
+          playerX = orangeX;
+        }
+        else if(grid[orangeX][orangeY+1] === "wall"){
+          playerY = orangeY-1;
+          playerX = orangeX;
+        }
       }
       else if(grid[playerY][playerX-1] === grid[orangeY][orangeX]){
-        if (grid[blueY][blueX-1] === "wall"){
+        grid[playerY][playerX] = 0;
+        if(grid[blueX+1][blueY] === "wall"){
+          playerY = blueY;
+          playerX = blueX+1;
         }
-        else{
-          grid[playerY][playerX] = 0;
+        else if(grid[blueX-1][blueY] === "wall"){
           playerY = blueY;
           playerX = blueX-1;
+        }
+        else if(grid[blueX][blueY+1] === "wall"){
+          playerY = blueY+1;
+          playerX = blueX;
+        }
+        else if(grid[blueX][blueY-1] === "wall"){
+          playerY = blueY-1;
+          playerX = blueX;
         }
       }
       else{
@@ -231,13 +271,96 @@ function keyPressed(){
     }
   }
   grid[playerY][playerX] = 1;
-}
 
-//this is mostly placing portals although there will probably be more in the final project
-function mousePressed(){
-  let cellSize = width/cols;
-  blueX = floor(mouseX/cellsize);
-  blueY = playerY;
+  //this is where portals are made
+  if(key === "ArrowRight"){
+    if (portalColor === 0){
+      grid[blueY][blueX] = 0;
+      blueX = playerX;
+      blueY = playerY;
+      while(grid[blueY][blueX+1] != "wall"){
+        blueX += 1;
+      }
+      grid[blueY][blueX] = "portalB";
+      portalColor += 1;
+    }
+    else{
+      grid[orangeY][orangeX] = 0;
+      orangeX = playerX;
+      orangeY = playerY;
+      while(grid[orangeY][orangeX+1] != "wall"){
+        orangeX += 1;
+      }
+      grid[orangeY][orangeX] = "portalO";
+      portalColor -= 1;
+    }
+  }
+  if(key === "ArrowLeft"){
+    if (portalColor === 0){
+      grid[blueY][blueX] = 0;
+      blueX = playerX;
+      blueY = playerY;
+      while(grid[blueY][blueX-1] != "wall"){
+        blueX -= 1;
+      }
+      grid[blueY][blueX] = "portalB";
+      portalColor += 1;
+    }
+    else{
+      grid[orangeY][orangeX] = 0;
+      orangeX = playerX;
+      orangeY = playerY;
+      while(grid[orangeY][orangeX-1] != "wall"){
+        orangeX -= 1;
+      }
+      grid[orangeY][orangeX] = "portalO";
+      portalColor -= 1;
+    }
+  }
+  if(key === "ArrowUp"){
+    if (portalColor === 0){
+      grid[blueY][blueX] = 0;
+      blueX = playerX;
+      blueY = playerY;
+      while(grid[blueY-1][blueX] != "wall"){
+        blueY -= 1;
+      }
+      grid[blueY][blueX] = "portalB";
+      portalColor += 1;
+    }
+    else{
+      grid[orangeY][orangeX] = 0;
+      orangeX = playerX;
+      orangeY = playerY;
+      while(grid[orangeY-1][orangeX] != "wall"){
+        orangeY -= 1;
+      }
+      grid[orangeY][orangeX] = "portalO";
+      portalColor -= 1;
+    }
+  }
+  if(key === "ArrowUp"){
+    if (portalColor === 0){
+      grid[blueY][blueX] = 0;
+      blueX = playerX;
+      blueY = playerY;
+      while(grid[blueY-1][blueX] != "wall"){
+        blueY -= 1;
+      }
+      grid[blueY][blueX] = "portalB";
+      portalColor += 1;
+    }
+    else{
+      grid[orangeY][orangeX] = 0;
+      orangeX = playerX;
+      orangeY = playerY;
+      while(grid[orangeY-1][orangeX] != "wall"){
+        orangeY -= 1;
+      }
+      grid[orangeY][orangeX] = "portalO";
+      portalColor -= 1;
+    }
+  }
 }
 
 //this is where i make each different room

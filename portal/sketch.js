@@ -17,7 +17,7 @@ let blueX=2;
 let blueY=2;
 let cellSize;
 let playerPos;
-let portalColor;
+let portalColor = 0;
 let pressed = false;
 
 //Setup loop where i make the game not explode when it opens
@@ -76,9 +76,30 @@ function displayGrid(grid, rows, cols) {
 }
 //this is checking when keys are pressed in each room to move or open buttons
 function keyPressed(){
+  if(key === "q"){
+    portalColor = 1;
+  }
+  if(key === "e"){
+    portalColor = 0;
+  }
   if (key === 'e'){
     if(grid[playerY-1][playerX] === "button" || grid[playerY+1][playerX] === "button" || grid[playerY][playerX-1] === "button"|| grid[playerY][playerX+1] === "button"){
-      pressed = true;
+      if(pressed === false){
+        if(state === "chamber1"){
+          grid[11][6] = "wall";
+          grid[17][10] = 0;
+          grid[15][15] = "wall";
+        }
+        pressed = true;
+      }
+      else{
+        if(state === "chamber1"){
+          grid[11][6] = 0;
+          grid[17][10] = "wall"
+          grid[15][15] = 0;
+        }
+        pressed = false;
+      }
     }
   }
   
@@ -96,19 +117,39 @@ function keyPressed(){
     }
     else{
       if(grid[playerY-1][playerX] === grid[blueY][blueX]){
-        if (grid[orangeY-1][orangeX] === "wall"){
+        grid[playerY][playerX] = 0;
+        if(grid[orangeY][orangeX-1] === "wall"){
+          playerY = orangeY;
+          playerX = orangeX+1;
         }
-        else{
-          grid[playerY][playerX] = 0;
+        else if(grid[orangeY][orangeX+1] === "wall"){
+          playerY = orangeY;
+          playerX = orangeX-1;
+        }
+        else if(grid[orangeY-1][orangeX] === "wall"){
+          playerY = orangeY+1;
+          playerX = orangeX;
+        }
+        else if(grid[orangeY+1][orangeX] === "wall"){
           playerY = orangeY-1;
           playerX = orangeX;
         }
       }
       else if(grid[playerY-1][playerX] === grid[orangeY][orangeX]){
-        if (grid[blueY-1][blueX] === "wall"){
+        grid[playerY][playerX] = 0;
+        if(grid[blueY][blueX-1] === "wall"){
+          playerY = blueY;
+          playerX = blueX+1;
         }
-        else{
-          grid[playerY][playerX] = 0;
+        else if(grid[blueY][blueX+1] === "wall"){
+          playerY = blueY;
+          playerX = blueX-1;
+        }
+        else if(grid[blueY-1][blueX] === "wall"){
+          playerY = blueY+1;
+          playerX = blueX;
+        }
+        else if(grid[blueY+1][blueX] === "wall"){
           playerY = blueY-1;
           playerX = blueX;
         }
@@ -133,20 +174,40 @@ function keyPressed(){
     }
     else{
       if(grid[playerY+1][playerX] === grid[blueY][blueX]){
-        if (grid[orangeY+1][orangeX] === "wall"){
+        grid[playerY][playerX] = 0;
+        if(grid[orangeY][orangeX-1] === "wall"){
+          playerY = orangeY;
+          playerX = orangeX+1;
         }
-        else{
-          grid[playerY][playerX] = 0;
+        else if(grid[orangeY][orangeX+1] === "wall"){
+          playerY = orangeY;
+          playerX = orangeX-1;
+        }
+        else if(grid[orangeY-1][orangeX] === "wall"){
           playerY = orangeY+1;
+          playerX = orangeX;
+        }
+        else if(grid[orangeY+1][orangeX] === "wall"){
+          playerY = orangeY-1;
           playerX = orangeX;
         }
       }
       else if(grid[playerY+1][playerX] === grid[orangeY][orangeX]){
-        if (grid[blueY+1][blueX] === "wall"){
+        grid[playerY][playerX] = 0;
+        if(grid[blueY][blueX-1] === "wall"){
+          playerY = blueY;
+          playerX = blueX+1;
         }
-        else{
-          grid[playerY][playerX] = 0;
+        else if(grid[blueY][blueX+1] === "wall"){
+          playerY = blueY;
+          playerX = blueX-1;
+        }
+        else if(grid[blueY-1][blueX] === "wall"){
           playerY = blueY+1;
+          playerX = blueX;
+        }
+        else if(grid[blueY+1][blueX] === "wall"){
+          playerY = blueY-1;
           playerX = blueX;
         }
       }
@@ -170,21 +231,41 @@ function keyPressed(){
     }
     else{
       if(grid[playerY][playerX+1] === grid[blueY][blueX]){
-        if (grid[orangeY][orangeX+1] === "wall"){
-        }
-        else{
-          grid[playerY][playerX] = 0;
+        grid[playerY][playerX] = 0;
+        if(grid[orangeY][orangeX-1] === "wall"){
           playerY = orangeY;
           playerX = orangeX+1;
         }
+        else if(grid[orangeY][orangeX+1] === "wall"){
+          playerY = orangeY;
+          playerX = orangeX-1;
+        }
+        else if(grid[orangeY-1][orangeX] === "wall"){
+          playerY = orangeY+1;
+          playerX = orangeX;
+        }
+        else if(grid[orangeY+1][orangeX] === "wall"){
+          playerY = orangeY-1;
+          playerX = orangeX;
+        }
       }
       else if(grid[playerY][playerX+1] === grid[orangeY][orangeX]){
-        if (grid[blueY][blueX+1] === "wall"){
-        }
-        else{
-          grid[playerY][playerX] = 0;
+        grid[playerY][playerX] = 0;
+        if(grid[blueY][blueX-1] === "wall"){
           playerY = blueY;
           playerX = blueX+1;
+        }
+        else if(grid[blueY][blueX+1] === "wall"){
+          playerY = blueY;
+          playerX = blueX-1;
+        }
+        else if(grid[blueY-1][blueX] === "wall"){
+          playerY = blueY+1;
+          playerX = blueX;
+        }
+        else if(grid[blueY+1][blueX] === "wall"){
+          playerY = blueY-1;
+          playerX = blueX;
         }
       }
       else{
@@ -207,21 +288,41 @@ function keyPressed(){
     }
     else{
       if(grid[playerY][playerX-1] === grid[blueY][blueX]){
-        if (grid[orangeY][orangeX-1] === "wall"){
-        }
-        else{
-          grid[playerY][playerX] = 0;
+        grid[playerY][playerX] = 0;
+        if(grid[orangeY][orangeX+1] === "wall"){
           playerY = orangeY;
           playerX = orangeX-1;
         }
+        if(grid[orangeY][orangeX-1] === "wall"){
+          playerY = orangeY;
+          playerX = orangeX-1;
+        }
+        else if(grid[orangeY-1][orangeX] === "wall"){
+          playerY = orangeY+1;
+          playerX = orangeX;
+        }
+        else if(grid[orangeY+1][orangeX] === "wall"){
+          playerY = orangeY-1;
+          playerX = orangeX;
+        }
       }
       else if(grid[playerY][playerX-1] === grid[orangeY][orangeX]){
-        if (grid[blueY][blueX-1] === "wall"){
-        }
-        else{
-          grid[playerY][playerX] = 0;
+        grid[playerY][playerX] = 0;
+        if(grid[blueY][blueX+1] === "wall"){
           playerY = blueY;
           playerX = blueX-1;
+        }
+        else if(grid[blueY][blueX-1] === "wall"){
+          playerY = blueY;
+          playerX = blueX+1;
+        }
+        else if(grid[blueY+1][blueX] === "wall"){
+          playerY = blueY-1;
+          playerX = blueX;
+        }
+        else if(grid[blueY-1][blueX] === "wall"){
+          playerY = blueY+1;
+          playerX = blueX;
         }
       }
       else{
@@ -231,59 +332,86 @@ function keyPressed(){
     }
   }
   grid[playerY][playerX] = 1;
-}
 
-//this is mostly placing portals although there will probably be more in the final project
-function mousePressed(){
-  let cellSize = width/cols;
-  if(portalColor === 1){
-    grid[orangeY][orangeX] = 0;
-    orangeY = floor(mouseY / cellSize);
-    orangeX = floor(mouseX / cellSize);
-    if (grid[orangeY][orangeX] != "wall"&& grid[orangeY][orangeX] != "door" && grid[orangeY][orangeX] != "button"){
-      grid[orangeY][orangeX] = "portalO";
-      portalColor -= 1;
-    }
-    else if(grid[orangeY][orangeY] === "button"){
-      grid[orangeY][orangeX] = "button";
-      orangeY = 1;
-      orangeX = 1;
-    }
-    else if(grid[orangeY][orangeY] === "door"){
-      grid[orangeY][orangeX] = "door";
-      orangeY = 1;
-      orangeX = 1;
+  //this is where portals are made
+  if(key === "ArrowRight"){
+    if (portalColor === 0){
+      grid[blueY][blueX] = 0;
+      blueX = playerX;
+      blueY = playerY;
+      while(grid[blueY][blueX+1] != "wall" && grid[blueY][blueX+1] != "door"){
+        blueX += 1;
+      }
+      grid[blueY][blueX] = "portalB";
     }
     else{
-      grid[orangeY][orangeX] = "wall";
-      orangeY = 1;
-      orangeX = 1;
-      portalColor -= 1;
+      grid[orangeY][orangeX] = 0;
+      orangeX = playerX;
+      orangeY = playerY;
+      while(grid[orangeY][orangeX+1] != "wall" && grid[blueY][blueX+1] != "door"){
+        orangeX += 1;
+      }
+      grid[orangeY][orangeX] = "portalO";
     }
   }
-  else if (portalColor === 0){
-    grid[blueY][blueX] = 0;
-    blueY = floor(mouseY / cellSize);
-    blueX = floor(mouseX / cellSize);
-    if (grid[blueY][blueX] != "wall"&& grid[blueY][blueX] != "door" && grid[blueY][blueX] != "button"){
+  if(key === "ArrowLeft"){
+    if (portalColor === 0){
+      grid[blueY][blueX] = 0;
+      blueX = playerX;
+      blueY = playerY;
+      while(grid[blueY][blueX-1] != "wall" && grid[blueY][blueX+1] != "door"){
+        blueX -= 1;
+      }
       grid[blueY][blueX] = "portalB";
-      portalColor += 1;
-    }
-    else if(grid[blueY][blueY] === "button"){
-      grid[blueY][blueX] = "button";
-      blueY = 1;
-      blueX = 1;
-    }
-    else if(grid[blueY][blueY] === "door"){
-      grid[blueY][blueX] = "door";
-      blueY = 1;
-      blueX = 1;
     }
     else{
-      grid[blueY][blueX] = "wall";
-      blueY = 1;
-      blueX = 1;
-      portalColor += 1;
+      grid[orangeY][orangeX] = 0;
+      orangeX = playerX;
+      orangeY = playerY;
+      while(grid[orangeY][orangeX-1] != "wall" && grid[blueY][blueX+1] != "door"){
+        orangeX -= 1;
+      }
+      grid[orangeY][orangeX] = "portalO";
+    }
+  }
+  if(key === "ArrowUp"){
+    if (portalColor === 0){
+      grid[blueY][blueX] = 0;
+      blueX = playerX;
+      blueY = playerY;
+      while(grid[blueY-1][blueX] != "wall" && grid[blueY][blueX+1] != "door"){
+        blueY -= 1;
+      }
+      grid[blueY][blueX] = "portalB";
+    }
+    else{
+      grid[orangeY][orangeX] = 0;
+      orangeX = playerX;
+      orangeY = playerY;
+      while(grid[orangeY-1][orangeX] != "wall" && grid[blueY][blueX+1] != "door"){
+        orangeY -= 1;
+      }
+      grid[orangeY][orangeX] = "portalO";
+    }
+  }
+  if(key === "ArrowDown"){
+    if (portalColor === 0){
+      grid[blueY][blueX] = 0;
+      blueX = playerX;
+      blueY = playerY;
+      while(grid[blueY+1][blueX] != "wall" && grid[blueY][blueX+1] != "door"){
+        blueY += 1;
+      }
+      grid[blueY][blueX] = "portalB";
+    }
+    else{
+      grid[orangeY][orangeX] = 0;
+      orangeX = playerX;
+      orangeY = playerY;
+      while(grid[orangeY+1][orangeX] != "wall" && grid[blueY][blueX+1] != "door"){
+        orangeY += 1;
+      }
+      grid[orangeY][orangeX] = "portalO";
     }
   }
 }

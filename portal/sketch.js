@@ -115,7 +115,6 @@ function keyPressed(){
       else{
       }
     }
-    else{
       if(grid[playerY-1][playerX] === grid[blueY][blueX]){
         grid[playerY][playerX] = 0;
         if(grid[orangeY][orangeX-1] === "wall"){
@@ -158,7 +157,6 @@ function keyPressed(){
         grid[playerY][playerX] = 0;
         playerY -= 1;
       }
-    }
   }
   if (key === 's'){
     if (grid[playerY+1][playerX] === "wall"||grid[playerY+1][playerX] === "button"){

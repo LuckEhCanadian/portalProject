@@ -21,6 +21,11 @@ let pressed = false;
 let inventory;
 let boxX = 9;
 let boxY = 9;
+let portalSound;
+
+function preload(){
+  portalSound = new Audio("portalGun.m4a");
+}
 
 //Setup loop where i make the game not explode when it opens
 function setup() {
@@ -65,6 +70,9 @@ function displayGrid(grid, rows, cols) {
       else if(grid[y][x] === "button"){
         fill(255,0,0);
       }
+      else if(grid[y][x] === "countem"){
+        fill("YELLOW");
+      }
       else if(grid[y][x] === "door"){
         if (pressed === false){
           fill(50);
@@ -73,7 +81,7 @@ function displayGrid(grid, rows, cols) {
           fill(100);
         }
       }
-      else {
+      else{
         fill(0);
       }
       rect(x*cellSize, y*cellSize, cellSize, cellSize);
@@ -339,6 +347,7 @@ function keyPressed(){
 
   //this is where portals are made
   if(key === "ArrowRight"){
+    portalSound.play();
     if (portalColor === 0){
       grid[blueY][blueX] = 0;
       blueX = playerX;
@@ -453,6 +462,15 @@ function createRoom(){
       for(let y = 0; y < rows; y++){
         if (x === 0 || y === 0 || x === cols-1 || y === cols-1 || y === 6 || (y < 6 && x === 6)||(y < 6 && x === 12) || (y < 6 && x === cols-2)){
           room[x].push("wall");
+        }
+        else if(y === 1 &&(x === 1 || x === 3 || x === 5 || x === 8 || x === 10 || x === 15)){
+          room[x].push("countem");
+        }
+        else if(y === 3 &&(x === 7 || x === 13 || x === 5 || x === 2 || x === 17 || x === 15)){
+          room[x].push("countem");
+        }
+        else if(y === 5 &&(x === 1 || x === 3 || x === 5 || x === 9 || x === 11 || x === 15 || x === 17 || x === 13)){
+          room[x].push("countem");
         }
         else if(y === cols-2 && (x === 5 || x === 6)){
           room[x].push("door");

@@ -24,7 +24,7 @@ let boxY = 9;
 let portalSound;
 
 function preload(){
-  portalSound = new Audio("portalGun.m4a");
+  portalSound = new Audio("portalGun.mp3");
 }
 
 //Setup loop where i make the game not explode when it opens
@@ -368,6 +368,7 @@ function keyPressed(){
     }
   }
   if(key === "ArrowLeft"){
+    portalSound.play();
     if (portalColor === 0){
       grid[blueY][blueX] = 0;
       blueX = playerX;
@@ -388,6 +389,7 @@ function keyPressed(){
     }
   }
   if(key === "ArrowUp"){
+    portalSound.play();
     if (portalColor === 0){
       grid[blueY][blueX] = 0;
       blueX = playerX;
@@ -408,6 +410,7 @@ function keyPressed(){
     }
   }
   if(key === "ArrowDown"){
+    portalSound.play();
     if (portalColor === 0){
       grid[blueY][blueX] = 0;
       blueX = playerX;

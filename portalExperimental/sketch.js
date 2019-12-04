@@ -10,7 +10,7 @@ let rows = 20;
 let grid;
 let chamber;
 let playerX = 5;
-let playerY = 5;
+let playerY = 7;
 let orangeX=2;
 let orangeY=2;
 let blueX=2;
@@ -24,7 +24,7 @@ let boxY = 9;
 let portalSound;
 
 function preload(){
-  portalSound = new Audio("portalGun.mp3");
+  portalSound = loadSound("assets/portalGun.mp3");
 }
 
 //Setup loop where i make the game not explode when it opens
@@ -37,9 +37,9 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber2"
+  state = "chamber3"
   grid = createRoom();
-  grid[playerX][playerY] = 1;
+  grid[playerY][playerX] = 1;
   portalColor = 1;
   inventory = [];
 }
@@ -72,6 +72,9 @@ function displayGrid(grid, rows, cols) {
       }
       else if(grid[y][x] === "countem"){
         fill("YELLOW");
+      }
+      else if(grid[y][x] === "plate"){
+        fill("green");
       }
       else if(grid[y][x] === "door"){
         if (pressed === false){
@@ -448,9 +451,6 @@ function createRoom(){
         else if(y === cols-2 && (x === 5 || x === 6)){
           room[x].push("door");
         }
-        else if(y === boxY && x === boxX){
-          room[x].push("box");
-        }
         else{
           room[x].push(0);
         }
@@ -458,8 +458,8 @@ function createRoom(){
     }
   }
   else if (state === "chamber2"){
-    playerY = 12;
-    playerX = 9;
+    playerY = 10;
+    playerX = 12;
     for (let x = 0; x < cols; x++){
       room.push([]);
       for(let y = 0; y < rows; y++){
@@ -498,6 +498,9 @@ function createRoom(){
         }
         else if(y === cols-2 && (x === 5 || x === 6)){
           room[x].push("door");
+        }
+        else if(y === 15 && x === 10){
+          room[x].push("plate");
         }
         else{
           room[x].push(0);

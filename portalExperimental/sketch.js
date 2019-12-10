@@ -38,7 +38,7 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber3"
+  state = "chamber4"
   grid = createRoom();
   grid[playerY][playerX] = 1;
   portalColor = 1;
@@ -77,10 +77,8 @@ function displayGrid(grid, rows, cols) {
       else if(grid[y][x] === "box"){
         fill("green");
       }
-      else if (lazerUp === true){
-        if(grid[y][x] === "lazer"){
-          fill(154,0,255)
-        }
+      else if(grid[y][x] === "lazer"){
+        fill(154,0,255)
       }
       else if(grid[y][x] === "door"){
         if (pressed === false){
@@ -105,6 +103,10 @@ function door(){
   }
   else if(state === 'chamber2'){
     state = "chamber3";
+    grid = createRoom();
+  }
+  else if(state === 'chamber3'){
+    state = "chamber4";
     grid = createRoom();
   }
 }
@@ -524,8 +526,8 @@ function createRoom(){
     }
   }
   else if(state === "chamber3"){
-    playerY = 5;
-    playerX = 5;
+    playerY = 3;
+    playerX = 3;
     boxY = 7;
     boxX = 10;
     lazerUp = true;
@@ -552,6 +554,39 @@ function createRoom(){
         }
         else{
           room[x].push(0);
+        }
+      }
+    }
+  }
+  else if(state === "chamber4"){
+    playerY = 4;
+    playerX = 6;
+    lazerUp = true;
+    for (let x = 0; x < cols; x++){
+      room.push([]);
+      for(let y = 0; y < rows; y++){
+        if (x === 0 || y === 0 || x === cols-1 || y === cols-1 || (x === 15 && y <= 15)){
+          room[x].push("wall");
+        }
+        else if(y === cols-2 && (x === 5 || x === 6)){
+          room[x].push("door");
+        }
+        else if(y === cols/4 && x === cols-3){
+          room[x].push("box");
+        }
+        else{
+          room[x].push(0);
+        }
+        if (lazerUp === true){
+           if (y === 9 && x != "wall"){
+            room[x].push("lazer");
+          }
+          else if (x === 8 && (y != "wall" && y != "door")){
+            room[x].push("lazer");
+          }
+          else if (y === 3 && x != "wall"){
+            room[x].push("lazer");
+          }
         }
       }
     }

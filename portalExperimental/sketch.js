@@ -171,9 +171,28 @@ function keyPressed(){
           pressed = true;
         }
       }
-      else if(state = "chamber4"){
+      else if(state === "chamber4"){
         lazerUp = !lazerUp;
-        grid = createRoom();
+        if(lazerUp === true){
+          for(let x = 0; x < grid.length; x++){
+            if(grid[x][9] != "wall"){
+              grid[x][9] = "lazer";
+            }
+            if (grid[x][4] != "wall"){
+              grid[x][4] = "lazer";
+            }
+          }
+        }
+        else{
+          for(let x = 0; x < grid.length; x++){
+            if(grid[x][9] != "wall" && grid[x][9] != grid[x][10]){
+              grid[x][9] = 0;
+            }
+            if (grid[x][4] != "wall" && grid[x][4] != grid[x][10]){
+              grid[x][4] = 0;
+            }
+          }
+        }
       }
     }
   }
@@ -571,6 +590,9 @@ function createRoom(){
         if (x === 0 || y === 0 || x === cols-1 || y === cols-1 || (x === 15 && y <= 15)){
           room[x].push("wall");
         }
+        else if(x === 8 && y === 7){
+          room[x].push("wall");
+        }
         else if(y === 7 && x === 5){
           room[x].push("button");
         }
@@ -580,13 +602,17 @@ function createRoom(){
         else if(y === cols/4 && x === cols-3){
           room[x].push("box");
         }
-        else if (y === 9 && x != "wall"){
-          if (lazerUp === true){
-            room[x].push("lazer");
-          }
-          else{
-            room[x].push(0);
-          }
+        else if(y === 9 && x != "wall"){
+          room[x].push("lazer");
+        }
+        else if(y === 4 && x != "wall"){
+          room[x].push("lazer");
+        }
+        else if(y != "wall" && x === 10){
+          room[x].push("lazer");
+        }
+        else if(y === 17 & x === 8){
+          room[x].push("plate");
         }
         else{
           room[x].push(0);

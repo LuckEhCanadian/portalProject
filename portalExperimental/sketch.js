@@ -121,14 +121,16 @@ function keyPressed(){
     portalColor = 0;
   }
   if(key === "Shift"){
-    if(inventory[0] === "box"){
-      if (grid[playerY-1][playerX] === "plate"){
-        pressed = true;
+    if(grid[playerY-1][playerX] === 0 || grid[playerY-1][playerX] === "plate"){
+      if(inventory[0] === "box"){
+        if (grid[playerY-1][playerX] === "plate"){
+          pressed = true;
+        }
+        boxY = playerY-1;
+        boxX = playerX;
+        grid[boxY][boxX] = "box";
+        inventory.pop();
       }
-      boxY = playerY-1;
-      boxX = playerX;
-      grid[boxY][boxX] = "box";
-      inventory.pop();
     }
   }
   if(key === " "){
@@ -175,20 +177,21 @@ function keyPressed(){
         lazerUp = !lazerUp;
         if(lazerUp === true){
           for(let x = 0; x < grid.length; x++){
-            if(grid[x][9] != "wall"){
+            if(grid[x][9] != "wall"&& grid[x][9]){
               grid[x][9] = "lazer";
             }
-            if (grid[x][4] != "wall"){
+            if (grid[x][4] != "wall"&& grid[x][9]){
               grid[x][4] = "lazer";
             }
           }
         }
         else{
           for(let x = 0; x < grid.length; x++){
-            if(grid[x][9] != "wall" && grid[x][9] != grid[x][10]){
+            if(grid[x][9] != "wall" && grid[x][9]){
+              grid[x]
               grid[x][9] = 0;
             }
-            if (grid[x][4] != "wall" && grid[x][4] != grid[x][10]){
+            if (grid[x][4] != "wall" && grid[x][4]){
               grid[x][4] = 0;
             }
           }
@@ -602,10 +605,10 @@ function createRoom(){
         else if(y === cols/4 && x === cols-3){
           room[x].push("box");
         }
-        else if(y === 9 && x != "wall"){
+        else if(y === 9 && x != "wall" && x > 15){
           room[x].push("lazer");
         }
-        else if(y === 4 && x != "wall"){
+        else if(y === 4 && x != "wall" && x > 15){
           room[x].push("lazer");
         }
         else if(y != "wall" && x === 10){

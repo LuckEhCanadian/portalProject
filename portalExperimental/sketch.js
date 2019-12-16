@@ -24,6 +24,7 @@ let boxY = 9;
 let portalSound;
 let awnswer;
 let lazerUp;
+let equ;
 
 function preload(){
   portalSound = loadSound("assets/portalGun.mp3");
@@ -38,7 +39,7 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber4"
+  state = "chamber6"
   grid = createRoom();
   grid[playerY][playerX] = 1;
   portalColor = 1;
@@ -60,7 +61,12 @@ function displayGrid(grid, rows, cols) {
         fill(125);
       }
       else if(grid[y][x] === "plate"){
-        fill(0,200,100);
+        if(state = "chamber5"){
+          fill(255);
+        }
+        else{
+          fill(0,200,100);
+        }
       }
       else if(grid[y][x] === "portalO"){
         fill(255,119,0);
@@ -111,6 +117,14 @@ function door(){
     playerX = 6;
     grid = createRoom();
   }
+  else if(state === "chamber4"){
+    state = "chamber5";
+    grid = createRoom();
+  }
+  else if(state === "chamber5"){
+    state = "chamber6";
+    grid = createRoom();
+  }
 }
 //this is checking when keys are pressed in each room to move or open buttons
 function keyPressed(){
@@ -124,7 +138,12 @@ function keyPressed(){
     if(grid[playerY-1][playerX] === 0 || grid[playerY-1][playerX] === "plate"){
       if(inventory[0] === "box"){
         if (grid[playerY-1][playerX] === "plate"){
-          pressed = true;
+          if (state === "chamber5" && equ != 3){
+            equ += 1;
+          }
+          else{
+            pressed = true;
+          }
         }
         boxY = playerY-1;
         boxX = playerX;
@@ -175,26 +194,62 @@ function keyPressed(){
       }
       else if(state === "chamber4"){
         lazerUp = !lazerUp;
+        grid[10][9] = "lazer";
+        grid[10][4] = "lazer";
         if(lazerUp === true){
           for(let x = 0; x < grid.length; x++){
-            if(grid[x][9] != "wall"&& grid[x][9]){
-              grid[x][9] = "lazer";
+            if(grid[x][9] != "wall"){
+              if(x < 15){
+                grid[x][9] = "lazer";
+              }
+              else{
+                grid[x][9] = 0;
+              }
             }
-            if (grid[x][4] != "wall"&& grid[x][9]){
-              grid[x][4] = "lazer";
+            if(grid[x][4] != "wall"){
+              if(x < 15){
+                grid[x][4] = "lazer";
+              }
+              else{
+                grid[x][4] = 0;
+              }
             }
           }
         }
-        else{
+        else if(lazerUp === false){
           for(let x = 0; x < grid.length; x++){
-            if(grid[x][9] != "wall" && grid[x][9]){
-              grid[x]
-              grid[x][9] = 0;
+            if(grid[x][9] != "wall"){
+              if(x < 15){
+                grid[x][9] = 0;
+              }
+              else{
+                grid[x][9] = "lazer";
+              }
             }
-            if (grid[x][4] != "wall" && grid[x][4]){
-              grid[x][4] = 0;
+            if(grid[x][4] != "wall"){
+              if(x < 15){
+                grid[x][4] = 0;
+              }
+              else{
+                grid[x][4] = "lazer";
+              }
             }
           }
+        }
+        grid[10][9] = "lazer";
+        grid[10][4] = "lazer";
+      }
+      else if(state === "chamber5"){
+        if(equ === 1){
+          window.alert("y = -(12/8)x + 0");
+          window.alert("Ignore walls in the equation. Just use floor pannels to locate the pressure plate");
+        }
+        else if(equ === 2){
+          window.alert("y = -(6/2)x + 0");
+          window.alert("Once again, ignore walls in the equation. Just use floor pannels to locate the pressure plate");
+        }
+        else if(equ === 3){
+          window.alert("y = -(10/8)x + 0");
         }
       }
     }
@@ -605,10 +660,10 @@ function createRoom(){
         else if(y === cols/4 && x === cols-3){
           room[x].push("box");
         }
-        else if(y === 9 && x != "wall" && x > 15){
+        else if(y === 9 && x != "wall" && x < 15){
           room[x].push("lazer");
         }
-        else if(y === 4 && x != "wall" && x > 15){
+        else if(y === 4 && x != "wall" && x < 15){
           room[x].push("lazer");
         }
         else if(y != "wall" && x === 10){
@@ -616,6 +671,62 @@ function createRoom(){
         }
         else if(y === 17 & x === 8){
           room[x].push("plate");
+        }
+        else{
+          room[x].push(0);
+        }
+      }
+    }
+  }
+  else if(state === "chamber5"){
+    equ = 1;
+    for (let x = 0; x < cols; x++){
+      room.push([]);
+      for(let y = 0; y < rows; y++){
+        if (x === 0 || y === 0 || x === cols-1 || y === cols-1 || (x === 15 && y <= 15)){
+          room[x].push("wall");
+        }
+        else if(y === 7 && x === 5){
+          room[x].push("button");
+        }
+        else if(y === cols-2 && (x === 5 || x === 6)){
+          room[x].push("door");
+        }
+        else if(y === cols/4 && x === cols-3){
+          room[x].push("box");
+        }
+        else if((y === 9 && x === 13)||(y === 3 && x === 7)||(y === 9 && x === 11)){
+          room[x].push("plate");
+        }
+        else{
+          room[x].push(0);
+        }
+      }
+    }
+  }
+  else if (state === "chamber6"){
+    playerY = 10;
+    playerX = 12;
+    for (let x = 0; x < cols; x++){
+      room.push([]);
+      for(let y = 0; y < rows; y++){
+        if (x === 0 || y === 0 || x === cols-1 || y === cols-1 || y === 6 || (y < 6 && x === 6)||(y < 6 && x === 12) || (y < 6 && x === cols-2)){
+          room[x].push("wall");
+        }
+        else if(y === 11 && x === 8){
+          room[x].push("button");
+        }
+        else if(y === 1 &&(x === 7 || x === 17 || x === 5 || x === 1 || x === 9)){
+          room[x].push("countem");
+        }
+        else if(y === 3 &&(x === 7 || x === 13 || x === 5 || x === 2 || x === 17 || x === 15)){
+          room[x].push("countem");
+        }
+        else if(y === 5 &&(x === 1 || x === 3 || x === 5 || x === 9 || x === 11 || x === 15 || x === 17 || x === 13)){
+          room[x].push("countem");
+        }
+        else if(y === cols-2 && (x === 5 || x === 6)){
+          room[x].push("door");
         }
         else{
           room[x].push(0);

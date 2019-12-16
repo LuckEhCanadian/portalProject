@@ -23,6 +23,7 @@ let boxX = 9;
 let boxY = 9;
 let portalSound;
 let awnswer;
+let lazerUp;
 
 function preload(){
   portalSound = loadSound("assets/portalGun.mp3");
@@ -37,7 +38,7 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber1"
+  state = "chamber5"
   grid = createRoom();
   grid[playerY][playerX] = 1;
   portalColor = 1;
@@ -59,7 +60,12 @@ function displayGrid(grid, rows, cols) {
         fill(125);
       }
       else if(grid[y][x] === "plate"){
-        fill(0,200,100);
+        if(state = "chamber5"){
+          fill(255);
+        }
+        else{
+          fill(0,200,100);
+        }
       }
       else if(grid[y][x] === "portalO"){
         fill(255,119,0);
@@ -75,6 +81,9 @@ function displayGrid(grid, rows, cols) {
       }
       else if(grid[y][x] === "box"){
         fill("green");
+      }
+      else if(grid[y][x] === "lazer"){
+        fill(154,0,255)
       }
       else if(grid[y][x] === "door"){
         if (pressed === false){
@@ -101,6 +110,16 @@ function door(){
     state = "chamber3";
     grid = createRoom();
   }
+  else if(state === 'chamber3'){
+    state = "chamber4";
+    playerY = 4;
+    playerX = 6;
+    grid = createRoom();
+  }
+  else if(state === "chamber4"){
+    state = "chamber5";
+    grid = createRoom();
+  }
 }
 //this is checking when keys are pressed in each room to move or open buttons
 function keyPressed(){
@@ -111,14 +130,16 @@ function keyPressed(){
     portalColor = 0;
   }
   if(key === "Shift"){
-    if(inventory[0] === "box"){
-      if (grid[playerY-1][playerX] === "plate"){
-        pressed = true;
+    if(grid[playerY-1][playerX] === 0 || grid[playerY-1][playerX] === "plate"){
+      if(inventory[0] === "box"){
+        if (grid[playerY-1][playerX] === "plate"){
+          pressed = true;
+        }
+        boxY = playerY-1;
+        boxX = playerX;
+        grid[boxY][boxX] = "box";
+        inventory.pop();
       }
-      boxY = playerY-1;
-      boxX = playerX;
-      grid[boxY][boxX] = "box";
-      inventory.pop();
     }
   }
   if(key === " "){
@@ -160,6 +181,57 @@ function keyPressed(){
         if (answer === "857"){
           pressed = true;
         }
+      }
+      else if(state === "chamber4"){
+        lazerUp = !lazerUp;
+        grid[10][9] = "lazer";
+        grid[10][4] = "lazer";
+        if(lazerUp === true){
+          for(let x = 0; x < grid.length; x++){
+            if(grid[x][9] != "wall"){
+              if(x < 15){
+                grid[x][9] = "lazer";
+              }
+              else{
+                grid[x][9] = 0;
+              }
+            }
+            if(grid[x][4] != "wall"){
+              if(x < 15){
+                grid[x][4] = "lazer";
+              }
+              else{
+                grid[x][4] = 0;
+              }
+            }
+          }
+        }
+        else if(lazerUp === false){
+          for(let x = 0; x < grid.length; x++){
+            if(grid[x][9] != "wall"){
+              if(x < 15){
+                grid[x][9] = 0;
+              }
+              else{
+                grid[x][9] = "lazer";
+              }
+            }
+            if(grid[x][4] != "wall"){
+              if(x < 15){
+                grid[x][4] = 0;
+              }
+              else{
+                grid[x][4] = "lazer";
+              }
+            }
+          }
+        }
+        grid[10][9] = "lazer";
+        grid[10][4] = "lazer";
+      }
+      else if(state === "chamber5"){
+        window.alert("y = -(12/8)x + 0");
+        window.alert("Ignore walls in the equation. Just use floor pannels to locate the pressure plate");
       }
     }
   }
@@ -518,8 +590,8 @@ function createRoom(){
     }
   }
   else if(state === "chamber3"){
-    playerY = 5;
-    playerX = 5;
+    playerY = 3;
+    playerX = 3;
     boxY = 7;
     boxX = 10;
     for (let x = 0; x < cols; x++){
@@ -536,6 +608,76 @@ function createRoom(){
         }
         else if(y === boxY && x === boxX){
           room[x].push("box");
+        }
+        else if (y === 9 && x != "wall"){
+          room[x].push("lazer");
+        }
+        else if (x === 8 && (y != "wall" && y != "door")){
+          room[x].push("lazer");
+        }
+        else{
+          room[x].push(0);
+        }
+      }
+    }
+  }
+  else if(state === "chamber4"){
+    lazerUp = true;
+    for (let x = 0; x < cols; x++){
+      room.push([]);
+      for(let y = 0; y < rows; y++){
+        if (x === 0 || y === 0 || x === cols-1 || y === cols-1 || (x === 15 && y <= 15)){
+          room[x].push("wall");
+        }
+        else if(x === 8 && y === 7){
+          room[x].push("wall");
+        }
+        else if(y === 7 && x === 5){
+          room[x].push("button");
+        }
+        else if(y === cols-2 && (x === 5 || x === 6)){
+          room[x].push("door");
+        }
+        else if(y === cols/4 && x === cols-3){
+          room[x].push("box");
+        }
+        else if(y === 9 && x != "wall" && x < 15){
+          room[x].push("lazer");
+        }
+        else if(y === 4 && x != "wall" && x < 15){
+          room[x].push("lazer");
+        }
+        else if(y != "wall" && x === 10){
+          room[x].push("lazer");
+        }
+        else if(y === 17 & x === 8){
+          room[x].push("plate");
+        }
+        else{
+          room[x].push(0);
+        }
+      }
+    }
+  }
+  else if(state === "chamber5"){
+    lazerUp = true;
+    for (let x = 0; x < cols; x++){
+      room.push([]);
+      for(let y = 0; y < rows; y++){
+        if (x === 0 || y === 0 || x === cols-1 || y === cols-1 || (x === 15 && y <= 15)){
+          room[x].push("wall");
+        }
+        else if(y === 7 && x === 5){
+          room[x].push("button");
+        }
+        else if(y === cols-2 && (x === 5 || x === 6)){
+          room[x].push("door");
+        }
+        else if(y === cols/4 && x === cols-3){
+          room[x].push("box");
+        }
+        else if(y === 9 && x === 13){
+          room[x].push("plate");
         }
         else{
           room[x].push(0);

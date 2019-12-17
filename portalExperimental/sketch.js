@@ -25,6 +25,10 @@ let portalSound;
 let awnswer;
 let lazerUp;
 let equ;
+let ballX;
+let ballY;
+let ballDX = 1;
+let ballDY = 0;
 
 function preload(){
   portalSound = loadSound("assets/portalGun.mp3");
@@ -39,7 +43,7 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber6"
+  state = "chamber7"
   grid = createRoom();
   grid[playerY][playerX] = 1;
   portalColor = 1;
@@ -48,6 +52,7 @@ function setup() {
 //calling my display function
 function draw() {
   displayGrid(grid, rows, cols);
+  ballMove();
 }
 //displaying all the different parts of the grid
 function displayGrid(grid, rows, cols) {
@@ -84,7 +89,13 @@ function displayGrid(grid, rows, cols) {
         fill("green");
       }
       else if(grid[y][x] === "lazer"){
-        fill(154,0,255)
+        fill(154,0,255);
+      }
+      else if(grid[x][y] === "ball"){
+        fill("orange");
+      }
+      else if(grid[y][x] === "power"){
+        fill(255,124,17);
       }
       else if(grid[y][x] === "door"){
         if (pressed === false){
@@ -125,6 +136,53 @@ function door(){
     state = "chamber6";
     grid = createRoom();
   }
+  else if(state === "chamber6"){
+    state = "chamber7";
+    grid = createRoom();
+  }
+}
+
+
+function ballMove(){
+  grid[ballY][ballX] = 0;
+  if(state === "chamber7"){
+    if (ballDX != 0){
+      if(grid[ballY][ballX + ballDX] === "power"){
+        pressed = true;
+      }
+      if (grid[ballY][ballX + ballDX] === 0){
+        ballX += ballDX;
+      }
+      else if(grid[ballY][ballX + ballDX] === 1){
+        ballDY = ballDX;
+        ballDX = 0;
+      }
+      else{
+        ballDX *= -1;
+      }
+    }
+    else if (ballDY != 0){
+      if(grid[ballY + ballDY][ballX] === "power"){
+        pressed = true;
+      }
+      if (grid[ballY + ballDY][ballX] === 0){
+        ballY += ballDY;
+      }
+      else if(grid[ballY + ballDY][ballX] === 1){
+        ballDX = ballDY;
+        ballDY = 0;
+      }
+      else if(grid[ballY + ballDY][ballX] === "portalB"){
+        ballDY *= -1
+        ballX = orangeX
+        ballY = orangeY - ballDY
+      }
+      else{
+        ballDY *= -1;
+      }
+    }
+  }
+  grid[ballY][ballX] = "ball";
 }
 //this is checking when keys are pressed in each room to move or open buttons
 function keyPressed(){
@@ -251,6 +309,15 @@ function keyPressed(){
         else if(equ === 3){
           window.alert("y = -(10/8)x + 0");
         }
+      }
+      else if (state === "chamber6"){
+        answer = prompt("input 3 digit security code");
+        if (answer === "667"){
+          pressed = true;
+        }
+      }
+      else if (state === "chamber7"){
+
       }
     }
   }
@@ -705,7 +772,7 @@ function createRoom(){
     }
   }
   else if (state === "chamber6"){
-    playerY = 10;
+    playerY = 7;
     playerX = 12;
     for (let x = 0; x < cols; x++){
       room.push([]);
@@ -716,17 +783,46 @@ function createRoom(){
         else if(y === 11 && x === 8){
           room[x].push("button");
         }
-        else if(y === 1 &&(x === 7 || x === 17 || x === 5 || x === 1 || x === 9)){
+        else if(y === 1 &&(x === 7 || x === 17 || x === 5 || x === 1 || x === 9|| x === 15)){
           room[x].push("countem");
         }
-        else if(y === 3 &&(x === 7 || x === 13 || x === 5 || x === 2 || x === 17 || x === 15)){
+        else if(y === 3 &&(x === 7 || x === 9 ||x === 13 || x === 5 || x === 2 || x === 17)){
           room[x].push("countem");
         }
-        else if(y === 5 &&(x === 1 || x === 3 || x === 5 || x === 9 || x === 11 || x === 15 || x === 17 || x === 13)){
+        else if(y === 5 &&(x === 2 || x === 4 || x === 8 || x === 10 || x === 15 || x === 17 || x === 13)){
           room[x].push("countem");
         }
         else if(y === cols-2 && (x === 5 || x === 6)){
           room[x].push("door");
+        }
+        else{
+          room[x].push(0);
+        }
+      }
+    }
+  }
+  else if (state === "chamber7"){
+    playerY = 5;
+    playerX = 12;
+    ballX = cols/2;
+    ballY = cols/2
+    for (let x = 0; x < cols; x++){
+      room.push([]);
+      for(let y = 0; y < rows; y++){
+        if (x === 0 || y === 0 || x === cols-1 || y === cols-1){
+          room[x].push("wall");
+        }
+        else if(y === 11 && x === 8){
+          room[x].push("button");
+        }
+        else if(y === cols-2 && (x === 5 || x === 6)){
+          room[x].push("door");
+        }
+        else if(y === ballY && x === ballX){
+          room[x].push("ball");
+        }
+        else if(y === cols/2 && x === 1){
+          room[x].push("power");
         }
         else{
           room[x].push(0);

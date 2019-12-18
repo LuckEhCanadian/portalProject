@@ -43,7 +43,7 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber7"
+  state = "chamber1"
   grid = createRoom();
   grid[playerY][playerX] = 1;
   portalColor = 1;
@@ -52,7 +52,6 @@ function setup() {
 //calling my display function
 function draw() {
   displayGrid(grid, rows, cols);
-  ballMove();
 }
 //displaying all the different parts of the grid
 function displayGrid(grid, rows, cols) {
@@ -95,7 +94,7 @@ function displayGrid(grid, rows, cols) {
         fill("orange");
       }
       else if(grid[y][x] === "power"){
-        fill(255,124,17);
+        fill(200,124,17);
       }
       else if(grid[y][x] === "door"){
         if (pressed === false){
@@ -114,6 +113,10 @@ function displayGrid(grid, rows, cols) {
 }
 
 function door(){
+  orangeX = 1;
+  orangeY = 1;
+  blueX = 1;
+  blueY = 1;
   if (state === "chamber1"){
     state = "chamber2";
     grid = createRoom();
@@ -157,6 +160,58 @@ function ballMove(){
         ballDY = ballDX;
         ballDX = 0;
       }
+      else if(grid[ballY][ballX + ballDX] === "portalB"){
+        if(grid[orangeY][orangeX-1] === "wall"){
+          ballY = orangeY;
+          ballX = orangeX+1;
+          ballDY = 0;
+          ballDX = 1;
+        }
+        else if(grid[orangeY][orangeX+1] === "wall"){
+          ballY = orangeY;
+          ballX = orangeX-1;
+          ballDY = 0;
+          ballDX = -1;
+        }
+        else if(grid[orangeY-1][orangeX] === "wall"){
+          ballY = orangeY + 1;
+          ballX = orangeX;
+          ballDY = 1;
+          ballDX = 0;
+        }
+        else if(grid[orangeY+1][orangeX] === "wall"){
+          ballY = orangeY - 1;
+          ballX = orangeX;
+          ballDY = -1;
+          ballDX = 0;
+        }
+      }
+      else if(grid[ballY][ballX + ballDX] === "portalO"){
+        if(grid[blueY][blueX-1] === "wall"){
+          ballY = blueY;
+          ballX = blueX+1;
+          ballDY = 0;
+          ballDX = 1;
+        }
+        else if(grid[blueY][blueX+1] === "wall"){
+          ballY = blueY;
+          ballX = blueX-1;
+          ballDY = 0;
+          ballDX = -1;
+        }
+        else if(grid[blueY-1][blueX] === "wall"){
+          ballY = blueY + 1;
+          ballX = blueX;
+          ballDY = 1;
+          ballDX = 0;
+        }
+        else if(grid[blueY+1][blueX] === "wall"){
+          ballY = blueY - 1;
+          ballX = blueX;
+          ballDY = -1;
+          ballDX = 0;
+        }
+      }
       else{
         ballDX *= -1;
       }
@@ -173,9 +228,56 @@ function ballMove(){
         ballDY = 0;
       }
       else if(grid[ballY + ballDY][ballX] === "portalB"){
-        ballDY *= -1
-        ballX = orangeX
-        ballY = orangeY - ballDY
+        if(grid[orangeY][orangeX-1] === "wall"){
+          ballY = orangeY;
+          ballX = orangeX+1;
+          ballDY = 0;
+          ballDX = 1;
+        }
+        else if(grid[orangeY][orangeX+1] === "wall"){
+          ballY = orangeY;
+          ballX = orangeX-1;
+          ballDY = 0;
+          ballDX = -1;
+        }
+        else if(grid[orangeY-1][orangeX] === "wall"){
+          ballY = orangeY + 1;
+          ballX = orangeX;
+          ballDY = 1;
+          ballDX = 0;
+        }
+        else if(grid[orangeY+1][orangeX] === "wall"){
+          ballY = orangeY - 1;
+          ballX = orangeX;
+          ballDY = -1;
+          ballDX = 0;
+        }
+      }
+      else if(grid[ballY + ballDY][ballX] === "portalO"){
+        if(grid[blueY][blueX-1] === "wall"){
+          ballY = blueY;
+          ballX = blueX+1;
+          ballDY = 0;
+          ballDX = 1;
+        }
+        else if(grid[blueY][blueX+1] === "wall"){
+          ballY = blueY;
+          ballX = blueX-1;
+          ballDY = 0;
+          ballDX = -1;
+        }
+        else if(grid[blueY-1][blueX] === "wall"){
+          ballY = blueY + 1;
+          ballX = blueX;
+          ballDY = 1;
+          ballDX = 0;
+        }
+        else if(grid[blueY+1][blueX] === "wall"){
+          ballY = blueY - 1;
+          ballX = blueX;
+          ballDY = -1;
+          ballDX = 0;
+        }
       }
       else{
         ballDY *= -1;
@@ -317,7 +419,7 @@ function keyPressed(){
         }
       }
       else if (state === "chamber7"){
-
+        window.alert("this button doesn't really do anything so... Congrats you pressed a button")
       }
     }
   }
@@ -802,10 +904,11 @@ function createRoom(){
     }
   }
   else if (state === "chamber7"){
-    playerY = 5;
+    playerY = 7;
     playerX = 12;
     ballX = cols/2;
-    ballY = cols/2
+    ballY = cols/2;
+    ballMove();
     for (let x = 0; x < cols; x++){
       room.push([]);
       for(let y = 0; y < rows; y++){
@@ -815,7 +918,7 @@ function createRoom(){
         else if(y === 11 && x === 8){
           room[x].push("button");
         }
-        else if(y === cols-2 && (x === 5 || x === 6)){
+        else if(y === cols-2 && (x === 12 || x === 13)){
           room[x].push("door");
         }
         else if(y === ballY && x === ballX){
@@ -823,6 +926,9 @@ function createRoom(){
         }
         else if(y === cols/2 && x === 1){
           room[x].push("power");
+        }
+        else if(x === 5){
+          room[x].push("lazer");
         }
         else{
           room[x].push(0);

@@ -47,7 +47,7 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber0.5"
+  state = "chamber5"
   grid = createRoom();
   grid[playerY][playerX] = 1;
   portalColor = 1;
@@ -746,6 +746,8 @@ function keyPressed(){
 function createRoom(){
   let room = [];
   if (state === "chamber1"){
+    playerX = 5;
+    playerY = 5;
     for (let x = 0; x < cols; x++){
       room.push([]);
       for(let y = 0; y < rows; y++){
@@ -866,6 +868,8 @@ function createRoom(){
   }
   else if(state === "chamber5"){
     equ = 1;
+    playerY = 4;
+    playerX = 3;
     for (let x = 0; x < cols; x++){
       room.push([]);
       for(let y = 0; y < rows; y++){

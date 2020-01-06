@@ -47,7 +47,7 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber5"
+  state = "chamber7"
   grid = createRoom();
   grid[playerY][playerX] = 1;
   portalColor = 1;
@@ -122,11 +122,16 @@ function displayGrid(grid, rows, cols) {
   }
 }
 
+//this is the function for changing chambers and reseting all the buttons
 function door(){
   orangeX = 1;
   orangeY = 1;
   blueX = 1;
   blueY = 1;
+  if(state === "contract"){
+    state === "chabmer0.5"
+    grid = createRoom();
+  }
   if(state === "chamber0.5"){
     state = "chamber1"
     grid = createRoom();
@@ -165,10 +170,18 @@ function door(){
   }
 }
 
+function displayContract(){
+  if (state === "contract"){
 
+  }
+}
+
+//this is the function for moving the ball of electricity when ever it is included
 function ballMove(){
   grid[ballY][ballX] = 0;
+  //this is checking all the movement for when the ball is moving horizontally
   if (ballDX != 0){
+    //this checks if the ball is powering the objective to open the door
     if(grid[ballY][ballX + ballDX] === "power"){
       pressed = true;
       return;
@@ -180,26 +193,28 @@ function ballMove(){
       ballDY = ballDX;
       ballDX = 0;
     }
+    //this is all the code for moving the ball through portals
+    //very similar to player through portals
     else if(grid[ballY][ballX + ballDX] === "portalB"){
-      if(grid[orangeY][orangeX-1] === "wall"){
+      if(grid[orangeY][orangeX-1] != 0){
         ballY = orangeY;
         ballX = orangeX+1;
         ballDY = 0;
         ballDX = 1;
       }
-      else if(grid[orangeY][orangeX+1] === "wall"){
+      else if(grid[orangeY][orangeX+1] != 0){
         ballY = orangeY;
         ballX = orangeX-1;
         ballDY = 0;
         ballDX = -1;
       }
-      else if(grid[orangeY-1][orangeX] === "wall"){
+      else if(grid[orangeY-1][orangeX] != 0){
         ballY = orangeY + 1;
         ballX = orangeX;
         ballDY = 1;
         ballDX = 0;
       }
-      else if(grid[orangeY+1][orangeX] === "wall"){
+      else if(grid[orangeY+1][orangeX] != 0){
         ballY = orangeY - 1;
         ballX = orangeX;
         ballDY = -1;
@@ -207,25 +222,25 @@ function ballMove(){
       }
     }
     else if(grid[ballY][ballX + ballDX] === "portalO"){
-      if(grid[blueY][blueX-1] === "wall"){
+      if(grid[blueY][blueX-1] != 0){
         ballY = blueY;
         ballX = blueX+1;
         ballDY = 0;
         ballDX = 1;
       }
-      else if(grid[blueY][blueX+1] === "wall"){
+      else if(grid[blueY][blueX+1] != 0){
         ballY = blueY;
         ballX = blueX-1;
         ballDY = 0;
         ballDX = -1;
       }
-      else if(grid[blueY-1][blueX] === "wall"){
+      else if(grid[blueY-1][blueX] != 0){
         ballY = blueY + 1;
         ballX = blueX;
         ballDY = 1;
         ballDX = 0;
       }
-      else if(grid[blueY+1][blueX] === "wall"){
+      else if(grid[blueY+1][blueX] != 0){
         ballY = blueY - 1;
         ballX = blueX;
         ballDY = -1;
@@ -236,7 +251,9 @@ function ballMove(){
       ballDX *= -1;
     }
   }
+  //this is checking all the movement for when the ball is moving vertically
   else if (ballDY != 0){
+    //this checks if the ball is powering the objective to open the door
     if(grid[ballY + ballDY][ballX] === "power"){
       pressed = true;
       return;
@@ -248,26 +265,28 @@ function ballMove(){
       ballDX = ballDY;
       ballDY = 0;
     }
+    //this is all the code for moving the ball through portals
+    //once again very similar to player through portals
     else if(grid[ballY + ballDY][ballX] === "portalB"){
-      if(grid[orangeY][orangeX-1] === "wall"){
+      if(grid[orangeY][orangeX-1] != 0){
         ballY = orangeY;
         ballX = orangeX+1;
         ballDY = 0;
         ballDX = 1;
       }
-      else if(grid[orangeY][orangeX+1] === "wall"){
+      else if(grid[orangeY][orangeX+1] != 0){
         ballY = orangeY;
         ballX = orangeX-1;
         ballDY = 0;
         ballDX = -1;
       }
-      else if(grid[orangeY-1][orangeX] === "wall"){
+      else if(grid[orangeY-1][orangeX] != 0){
         ballY = orangeY + 1;
         ballX = orangeX;
         ballDY = 1;
         ballDX = 0;
       }
-      else if(grid[orangeY+1][orangeX] === "wall"){
+      else if(grid[orangeY+1][orangeX] != 0){
         ballY = orangeY - 1;
         ballX = orangeX;
         ballDY = -1;
@@ -275,25 +294,25 @@ function ballMove(){
       }
     }
     else if(grid[ballY + ballDY][ballX] === "portalO"){
-      if(grid[blueY][blueX-1] === "wall"){
+      if(grid[blueY][blueX-1] != 0){
         ballY = blueY;
         ballX = blueX+1;
         ballDY = 0;
         ballDX = 1;
       }
-      else if(grid[blueY][blueX+1] === "wall"){
+      else if(grid[blueY][blueX+1] != 0){
         ballY = blueY;
         ballX = blueX-1;
         ballDY = 0;
         ballDX = -1;
       }
-      else if(grid[blueY-1][blueX] === "wall"){
+      else if(grid[blueY-1][blueX] != 0){
         ballY = blueY + 1;
         ballX = blueX;
         ballDY = 1;
         ballDX = 0;
       }
-      else if(grid[blueY+1][blueX] === "wall"){
+      else if(grid[blueY+1][blueX] != 0){
         ballY = blueY - 1;
         ballX = blueX;
         ballDY = -1;
@@ -308,12 +327,14 @@ function ballMove(){
 }
 //this is checking when keys are pressed in each room to move or open buttons
 function keyPressed(){
+  //these two switch beteen the blue and orange portals
   if(key === "q"){
     portalColor = 1;
   }
   if(key === "e"){
     portalColor = 0;
   }
+  //this is the button to drop the box
   if(key === "Shift"){
     if(grid[playerY-1][playerX] === 0 || grid[playerY-1][playerX] === "plate"){
       if(inventory[0] === "box"){
@@ -332,6 +353,7 @@ function keyPressed(){
       }
     }
   }
+  //this is the button to pick up the box
   if(key === " "){
     if(grid[playerY-1][playerX] === "box" || grid[playerY+1][playerX] === "box" || grid[playerY][playerX-1] === "box"|| grid[playerY][playerX+1] === "box"){
       if (grid[playerY-1][playerX] === "box"){
@@ -350,7 +372,9 @@ function keyPressed(){
       inventory.push("box");
     }
   }
+  //this is making all the buttons work differnently for each chamber
   if (key === 'f'){
+    //pay respects
     if(grid[playerY-1][playerX] === "button" || grid[playerY+1][playerX] === "button" || grid[playerY][playerX-1] === "button"|| grid[playerY][playerX+1] === "button"){
       buttonSound.play();
       if(state === "chamber1"){
@@ -446,6 +470,7 @@ function keyPressed(){
   }
   
   if(key === 'w'){
+    //all the code for moving the player up
     if(grid[playerY-1][playerX] === 0){
       grid[playerY][playerX] = 0;
       playerY -= 1;
@@ -460,44 +485,45 @@ function keyPressed(){
     }
     else if(grid[playerY-1][playerX] === grid[blueY][blueX]){
       grid[playerY][playerX] = 0;
-      if(grid[orangeY][orangeX-1] === "wall"){
+      if(grid[orangeY][orangeX-1] != 0){
         playerY = orangeY;
         playerX = orangeX+1;
       }
-      else if(grid[orangeY][orangeX+1] === "wall"){
+      else if(grid[orangeY][orangeX+1] != 0){
         playerY = orangeY;
         playerX = orangeX-1;
       }
-      else if(grid[orangeY-1][orangeX] === "wall"){
+      else if(grid[orangeY-1][orangeX] != 0){
         playerY = orangeY+1;
         playerX = orangeX;
       }
-      else if(grid[orangeY+1][orangeX] === "wall"){
+      else if(grid[orangeY+1][orangeX] != 0){
         playerY = orangeY-1;
         playerX = orangeX;
       }
     }
     else if(grid[playerY-1][playerX] === grid[orangeY][orangeX]){
       grid[playerY][playerX] = 0;
-      if(grid[blueY][blueX-1] === "wall"){
+      if(grid[blueY][blueX-1] != 0){
         playerY = blueY;
         playerX = blueX+1;
       }
-      else if(grid[blueY][blueX+1] === "wall"){
+      else if(grid[blueY][blueX+1] != 0){
         playerY = blueY;
         playerX = blueX-1;
       }
-      else if(grid[blueY-1][blueX] === "wall"){
+      else if(grid[blueY-1][blueX] != 0){
         playerY = blueY+1;
         playerX = blueX;
       }
-      else if(grid[blueY+1][blueX] === "wall"){
+      else if(grid[blueY+1][blueX] != 0){
         playerY = blueY-1;
         playerX = blueX;
       }
     }
   }
   if (key === 's'){
+    //moving the player down
     if(grid[playerY+1][playerX] === 0){
       grid[playerY][playerX] = 0;
       playerY += 1;
@@ -512,44 +538,45 @@ function keyPressed(){
     }
     else if(grid[playerY+1][playerX] === grid[blueY][blueX]){
       grid[playerY][playerX] = 0;
-      if(grid[orangeY][orangeX-1] === "wall"){
+      if(grid[orangeY][orangeX-1] != 0){
         playerY = orangeY;
         playerX = orangeX+1;
       }
-      else if(grid[orangeY][orangeX+1] === "wall"){
+      else if(grid[orangeY][orangeX+1] != 0){
         playerY = orangeY;
         playerX = orangeX-1;
       }
-      else if(grid[orangeY-1][orangeX] === "wall"){
+      else if(grid[orangeY-1][orangeX] != 0){
         playerY = orangeY+1;
         playerX = orangeX;
       }
-      else if(grid[orangeY+1][orangeX] === "wall"){
+      else if(grid[orangeY+1][orangeX] != 0){
         playerY = orangeY-1;
         playerX = orangeX;
       }
     }
     else if(grid[playerY+1][playerX] === grid[orangeY][orangeX]){
       grid[playerY][playerX] = 0;
-      if(grid[blueY][blueX-1] === "wall"){
+      if(grid[blueY][blueX-1] != 0){
         playerY = blueY;
         playerX = blueX+1;
       }
-      else if(grid[blueY][blueX+1] === "wall"){
+      else if(grid[blueY][blueX+1] != 0){
         playerY = blueY;
         playerX = blueX-1;
       }
-      else if(grid[blueY-1][blueX] === "wall"){
+      else if(grid[blueY-1][blueX] != 0){
         playerY = blueY+1;
         playerX = blueX;
       }
-      else if(grid[blueY+1][blueX] === "wall"){
+      else if(grid[blueY+1][blueX] != 0){
         playerY = blueY-1;
         playerX = blueX;
       }
     }
   }
   if(key === 'd'){
+    //moving the player to the right
     if(grid[playerY][playerX+1] === 0){
       grid[playerY][playerX] = 0;
       playerX += 1;
@@ -564,44 +591,45 @@ function keyPressed(){
     }
     else if(grid[playerY][playerX+1] === grid[blueY][blueX]){
       grid[playerY][playerX] = 0;
-      if(grid[orangeY][orangeX-1] === "wall"){
+      if(grid[orangeY][orangeX-1] != 0){
         playerY = orangeY;
         playerX = orangeX+1;
       }
-      else if(grid[orangeY][orangeX+1] === "wall"){
+      else if(grid[orangeY][orangeX+1] != 0){
         playerY = orangeY;
         playerX = orangeX-1;
       }
-      else if(grid[orangeY-1][orangeX] === "wall"){
+      else if(grid[orangeY-1][orangeX] != 0){
         playerY = orangeY+1;
         playerX = orangeX;
       }
-      else if(grid[orangeY+1][orangeX] === "wall"){
+      else if(grid[orangeY+1][orangeX] != 0){
         playerY = orangeY-1;
         playerX = orangeX;
       }
     }
     else if(grid[playerY][playerX+1] === grid[orangeY][orangeX]){
       grid[playerY][playerX] = 0;
-      if(grid[blueY][blueX-1] === "wall"){
+      if(grid[blueY][blueX-1] != 0){
         playerY = blueY;
         playerX = blueX+1;
       }
-      else if(grid[blueY][blueX+1] === "wall"){
+      else if(grid[blueY][blueX+1] != 0){
         playerY = blueY;
         playerX = blueX-1;
       }
-      else if(grid[blueY-1][blueX] === "wall"){
+      else if(grid[blueY-1][blueX] != 0){
         playerY = blueY+1;
         playerX = blueX;
       }
-      else if(grid[blueY+1][blueX] === "wall"){
+      else if(grid[blueY+1][blueX] != 0){
         playerY = blueY-1;
         playerX = blueX;
       }
     }
   }
   if(key === 'a'){
+    //moving the player to the left
     if(grid[playerY][playerX-1] === 0){
       grid[playerY][playerX] = 0;
       playerX -= 1;
@@ -616,38 +644,38 @@ function keyPressed(){
     }
     else if(grid[playerY][playerX-1] === grid[blueY][blueX]){
       grid[playerY][playerX] = 0;
-      if(grid[orangeY][orangeX+1] === "wall"){
+      if(grid[orangeY][orangeX+1] != 0){
         playerY = orangeY;
         playerX = orangeX-1;
       }
-      if(grid[orangeY][orangeX-1] === "wall"){
+      if(grid[orangeY][orangeX-1] != 0){
         playerY = orangeY;
         playerX = orangeX-1;
       }
-      else if(grid[orangeY-1][orangeX] === "wall"){
+      else if(grid[orangeY-1][orangeX] != 0){
         playerY = orangeY+1;
         playerX = orangeX;
       }
-      else if(grid[orangeY+1][orangeX] === "wall"){
+      else if(grid[orangeY+1][orangeX] != 0){
         playerY = orangeY-1;
         playerX = orangeX;
       }
     }
     else if(grid[playerY][playerX-1] === grid[orangeY][orangeX]){
       grid[playerY][playerX] = 0;
-      if(grid[blueY][blueX+1] === "wall"){
+      if(grid[blueY][blueX+1] != 0){
         playerY = blueY;
         playerX = blueX-1;
       }
-      else if(grid[blueY][blueX-1] === "wall"){
+      else if(grid[blueY][blueX-1] != 0){
         playerY = blueY;
         playerX = blueX+1;
       }
-      else if(grid[blueY+1][blueX] === "wall"){
+      else if(grid[blueY+1][blueX] != 0){
         playerY = blueY-1;
         playerX = blueX;
       }
-      else if(grid[blueY-1][blueX] === "wall"){
+      else if(grid[blueY-1][blueX] != 0){
         playerY = blueY+1;
         playerX = blueX;
       }
@@ -656,13 +684,14 @@ function keyPressed(){
   grid[playerY][playerX] = 1;
 
   //this is where portals are made
+  //each arrow makes a portal in a differnt direction based on which portal is selected
   if(key === "ArrowRight"){
     portalSound.play();
     if (portalColor === 0){
       grid[blueY][blueX] = 0;
       blueX = playerX;
       blueY = playerY;
-      while(grid[blueY][blueX+1] != "wall" && grid[blueY][blueX+1] != "door"){
+      while(grid[blueY][blueX+1] === 0 || grid[blueY][blueX+1] === "lazer"){
         blueX += 1;
       }
       grid[blueY][blueX] = "portalB";
@@ -671,7 +700,7 @@ function keyPressed(){
       grid[orangeY][orangeX] = 0;
       orangeX = playerX;
       orangeY = playerY;
-      while(grid[orangeY][orangeX+1] != "wall" && grid[orangeY][orangeX+1] != "door"){
+      while(grid[orangeY][orangeX+1] === 0|| grid[orangeY][orangeX+1] === "lazer"){
         orangeX += 1;
       }
       grid[orangeY][orangeX] = "portalO";
@@ -683,7 +712,7 @@ function keyPressed(){
       grid[blueY][blueX] = 0;
       blueX = playerX;
       blueY = playerY;
-      while(grid[blueY][blueX-1] != "wall" && grid[blueY][blueX+1] != "door"){
+      while(grid[blueY][blueX-1] === 0|| grid[blueY][blueX-1] === "lazer"){
         blueX -= 1;
       }
       grid[blueY][blueX] = "portalB";
@@ -692,7 +721,7 @@ function keyPressed(){
       grid[orangeY][orangeX] = 0;
       orangeX = playerX;
       orangeY = playerY;
-      while(grid[orangeY][orangeX-1] != "wall" && grid[orangeY][orangeX+1] != "door"){
+      while(grid[orangeY][orangeX-1] === 0|| grid[orangeY][orangeX-1] === "lazer"){
         orangeX -= 1;
       }
       grid[orangeY][orangeX] = "portalO";
@@ -704,7 +733,7 @@ function keyPressed(){
       grid[blueY][blueX] = 0;
       blueX = playerX;
       blueY = playerY;
-      while(grid[blueY-1][blueX] != "wall" && grid[blueY][blueX+1] != "door"){
+      while(grid[blueY-1][blueX] === 0|| grid[blueY-1][blueX] === "lazer"){
         blueY -= 1;
       }
       grid[blueY][blueX] = "portalB";
@@ -713,7 +742,7 @@ function keyPressed(){
       grid[orangeY][orangeX] = 0;
       orangeX = playerX;
       orangeY = playerY;
-      while(grid[orangeY-1][orangeX] != "wall" && grid[orangeY][orangeX+1] != "door"){
+      while(grid[orangeY-1][orangeX] === 0|| grid[orangeY-1][orangeX] === "lazer"){
         orangeY -= 1;
       }
       grid[orangeY][orangeX] = "portalO";
@@ -725,7 +754,7 @@ function keyPressed(){
       grid[blueY][blueX] = 0;
       blueX = playerX;
       blueY = playerY;
-      while(grid[blueY+1][blueX] != "wall" && grid[blueY][blueX+1] != "door"){
+      while(grid[blueY+1][blueX] === 0|| grid[blueY+1][blueX] === "lazer"){
         blueY += 1;
       }
       grid[blueY][blueX] = "portalB";
@@ -734,7 +763,7 @@ function keyPressed(){
       grid[orangeY][orangeX] = 0;
       orangeX = playerX;
       orangeY = playerY;
-      while(grid[orangeY+1][orangeX] != "wall" && grid[orangeY][orangeX+1] != "door"){
+      while(grid[orangeY+1][orangeX] === 0 || grid[orangeY+1][orangeX] === "lazer"){
         orangeY += 1;
       }
       grid[orangeY][orangeX] = "portalO";

@@ -14,7 +14,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch index.html",
+            "name": "Launch menu.html",
             "file": "${workspaceFolder}/index.html"
         }
     ]

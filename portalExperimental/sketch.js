@@ -21,7 +21,6 @@ let pressed = false;
 let inventory;
 let boxX = 9;
 let boxY = 9;
-let portalSound;
 let awnswer;
 let lazerUp;
 let equ;
@@ -31,7 +30,9 @@ let ballDX = 1;
 let ballDY = 0;
 let ballSpeed;
 let lastMove = 0; 
-let moveTime = 50;
+let moveTime = 75;
+let portalSound;
+let buttonSound;
 
 function preload(){
   portalSound = loadSound("assets/portalGun.mp3");
@@ -47,7 +48,7 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber7"
+  state = "chamber0.5"
   grid = createRoom();
   grid[playerY][playerX] = 1;
   portalColor = 1;

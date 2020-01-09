@@ -33,10 +33,12 @@ let lastMove = 0;
 let moveTime = 75;
 let portalSound;
 let buttonSound;
+let boxArt;
 
 function preload(){
   portalSound = loadSound("assets/portalGun.mp3");
   buttonSound = loadSound("assets/portalButton.mp3");
+  boxArt = loadImage("assets/boxArt.png");
 }
 
 //Setup loop where i make the game not explode when it opens
@@ -71,9 +73,11 @@ function displayGrid(grid, rows, cols) {
     for (let x = 0; x < cols; x++) {
       if (grid[y][x] === 0) {
         fill(255);
+        rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
       else if(grid[y][x] === "wall"){
         fill(125);
+        rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
       else if(grid[y][x] === "plate"){
         if(state === "chamber5"){
@@ -82,30 +86,37 @@ function displayGrid(grid, rows, cols) {
         else{
           fill(0,200,100);
         }
+        rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
       else if(grid[y][x] === "portalO"){
         fill(255,119,0);
       }
       else if(grid[y][x] === "portalB"){
         fill(0,177,255);
+        rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
       else if(grid[y][x] === "button"){
         fill(255,0,0);
+        rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
       else if(grid[y][x] === "countem"){
         fill("YELLOW");
+        rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
       else if(grid[y][x] === "box"){
-        fill("green");
+        image(boxArt, (boxX-2*cellSize), (boxY-2*cellSize), 40, 40);
       }
       else if(grid[y][x] === "lazer"){
         fill(154,0,255);
+        rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
       else if(grid[y][x] === "ball"){
         fill("orange");
+        rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
       else if(grid[y][x] === "power"){
         fill(200,124,17);
+        rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
       else if(grid[y][x] === "door"){
         if (pressed === false){
@@ -114,11 +125,12 @@ function displayGrid(grid, rows, cols) {
         else if(pressed === true){
           fill(100);
         }
+        rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
       else{
         fill(0);
+        rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
-      rect(x*cellSize, y*cellSize, cellSize, cellSize);
     }
   }
 }

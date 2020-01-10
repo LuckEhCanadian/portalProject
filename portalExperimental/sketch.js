@@ -50,7 +50,7 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber0.5"
+  state = "chamber5"
   grid = createRoom();
   grid[playerY][playerX] = 1;
   portalColor = 1;
@@ -90,6 +90,7 @@ function displayGrid(grid, rows, cols) {
       }
       else if(grid[y][x] === "portalO"){
         fill(255,119,0);
+        rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
       else if(grid[y][x] === "portalB"){
         fill(0,177,255);
@@ -103,9 +104,6 @@ function displayGrid(grid, rows, cols) {
         fill("YELLOW");
         rect(x*cellSize, y*cellSize, cellSize, cellSize);
       }
-      else if(grid[y][x] === "box"){
-        image(boxArt, (boxX-2*cellSize), (boxY-2*cellSize), 40, 40);
-      }
       else if(grid[y][x] === "lazer"){
         fill(154,0,255);
         rect(x*cellSize, y*cellSize, cellSize, cellSize);
@@ -113,6 +111,9 @@ function displayGrid(grid, rows, cols) {
       else if(grid[y][x] === "ball"){
         fill("orange");
         rect(x*cellSize, y*cellSize, cellSize, cellSize);
+      }
+      else if(grid[y][x] === "box"){
+        image(boxArt, (boxX*cellSize), (boxY*cellSize), cellSize, cellSize);
       }
       else if(grid[y][x] === "power"){
         fill(200,124,17);
@@ -154,7 +155,6 @@ function door(){
     grid = createRoom();
   }
   else if(state === 'chamber2'){
-    console.log("going to three");
     state = "chamber3";
     grid = createRoom();
   }
@@ -165,7 +165,6 @@ function door(){
     grid = createRoom();
   }
   else if(state === "chamber4"){
-    console.log("going to five");
     state = "chamber5";
     grid = createRoom();
   }
@@ -180,12 +179,6 @@ function door(){
   else if(state === "chamber7"){
     state = "chamber 8";
     grid = createRoom();
-  }
-}
-
-function displayContract(){
-  if (state === "contract"){
-
   }
 }
 
@@ -424,12 +417,12 @@ function keyPressed(){
                 grid[x][9] = 0;
               }
             }
-            if(grid[x][4] != "wall"){
+            if(grid[x][3] != "wall"){
               if(x < 15){
-                grid[x][4] = "lazer";
+                grid[x][3] = "lazer";
               }
               else{
-                grid[x][4] = 0;
+                grid[x][3] = 0;
               }
             }
           }
@@ -444,18 +437,20 @@ function keyPressed(){
                 grid[x][9] = "lazer";
               }
             }
-            if(grid[x][4] != "wall"){
+            if(grid[x][3] != "wall"){
               if(x < 15){
-                grid[x][4] = 0;
+                grid[x][3] = 0;
               }
               else{
-                grid[x][4] = "lazer";
+                grid[x][3] = "lazer";
               }
             }
           }
         }
         grid[10][9] = "lazer";
-        grid[10][4] = "lazer";
+        grid[10][3] = "lazer";
+        grid[3][9] = "lazer";
+        grid[3][3] = "lazer";
       }
       else if(state === "chamber5"){
         if(equ === 1){
@@ -841,8 +836,8 @@ function createRoom(){
   else if(state === "chamber3"){
     playerY = 3;
     playerX = 3;
-    boxY = 7;
-    boxX = 10;
+    boxY = 17;
+    boxX = 4;
     for (let x = 0; x < cols; x++){
       room.push([]);
       for(let y = 0; y < rows; y++){
@@ -855,7 +850,7 @@ function createRoom(){
         else if(y === 15 && x === 10){
           room[x].push("plate");
         }
-        else if(y === boxY && x === boxX){
+        else if(y === boxX && x === boxY){
           room[x].push("box");
         }
         else if (y === 9 && x != "wall"){
@@ -872,13 +867,15 @@ function createRoom(){
   }
   else if(state === "chamber4"){
     lazerUp = true;
+    boxX = 6;
+    boxY = 17;
     for (let x = 0; x < cols; x++){
       room.push([]);
       for(let y = 0; y < rows; y++){
         if (x === 0 || y === 0 || x === cols-1 || y === cols-1 || (x === 15 && y <= 15)){
           room[x].push("wall");
         }
-        else if(x === 8 && y === 7){
+        else if(x === 7 && y === 6){
           room[x].push("wall");
         }
         else if(y === 7 && x === 5){
@@ -887,19 +884,23 @@ function createRoom(){
         else if(y === cols-2 && (x === 5 || x === 6)){
           room[x].push("door");
         }
-        else if(y === cols/4 && x === cols-3){
+        else if(y === boxX && x === boxY){
+          image(boxArt, (boxX*cellSize), (boxY*cellSize), cellSize, cellSize);
           room[x].push("box");
         }
         else if(y === 9 && x != "wall" && x < 15){
           room[x].push("lazer");
         }
-        else if(y === 4 && x != "wall" && x < 15){
+        else if(y === 3 && x != "wall" && x < 15){
           room[x].push("lazer");
         }
         else if(y != "wall" && x === 10){
           room[x].push("lazer");
         }
-        else if(y === 17 & x === 8){
+        else if(y != "wall" && x === 3){
+          room[x].push("lazer");
+        }
+        else if(y === 6 & x === 1){
           room[x].push("plate");
         }
         else{
@@ -912,6 +913,8 @@ function createRoom(){
     equ = 1;
     playerY = 4;
     playerX = 3;
+    boxX = 2;
+    boxY = 2;
     for (let x = 0; x < cols; x++){
       room.push([]);
       for(let y = 0; y < rows; y++){
@@ -924,7 +927,7 @@ function createRoom(){
         else if(y === cols-2 && (x === 5 || x === 6)){
           room[x].push("door");
         }
-        else if(y === cols/4 && x === cols-3){
+        else if(y === boxX && x === boxY){
           room[x].push("box");
         }
         else if((y === 9 && x === 13)||(y === 3 && x === 7)||(y === 9 && x === 11)){
@@ -1037,6 +1040,8 @@ function createRoom(){
           room[x].push("lazer");
         }
         else if(y === 14 && x === 7){
+          boxX = 14;
+          boxY = 7
           room[x].push("box");
         }
         else if(x === 14 && y === 7){

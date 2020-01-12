@@ -34,11 +34,23 @@ let moveTime = 75;
 let portalSound;
 let buttonSound;
 let boxArt;
+let larryPlace;
 
 function preload(){
   portalSound = loadSound("assets/portalGun.mp3");
   buttonSound = loadSound("assets/portalButton.mp3");
   boxArt = loadImage("assets/boxArt.png");
+  buzzer = loadSound("assets/buzzer.mp3");
+  noHelp = loadSound("assets/noHelp.mp3");
+  c05A = loadSound("assets/chamber0.5Audio.mp3");
+  c1A = loadSound("assets/chamber1Audio.mp3");
+  c2A = loadSound("assets/chamber2Audio.mp3");
+  c3A = loadSound("assets/chamber3Audio.mp3");
+  c4A = loadSound("assets/chamber4Audio.mp3");
+  c5A = loadSound("assets/chamber5Audio.mp3");
+  c6A = loadSound("assets/chamber6Audio.mp3");
+  c7A = loadSound("assets/chamber7Audio.mp3");
+  larry = loadImage("assets/core.png");
 }
 
 //Setup loop where i make the game not explode when it opens
@@ -50,7 +62,7 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber5"
+  state = "chamber4"
   grid = createRoom();
   grid[playerY][playerX] = 1;
   portalColor = 1;
@@ -404,6 +416,8 @@ function keyPressed(){
         }
       }
       else if(state === "chamber4"){
+        buzzer.play();
+        noHelp.play();
         lazerUp = !lazerUp;
         grid[10][9] = "lazer";
         grid[10][4] = "lazer";
@@ -783,6 +797,7 @@ function keyPressed(){
 function createRoom(){
   let room = [];
   if (state === "chamber1"){
+    c1A.play();
     playerX = 5;
     playerY = 5;
     for (let x = 0; x < cols; x++){
@@ -804,6 +819,7 @@ function createRoom(){
     }
   }
   else if (state === "chamber2"){
+    c2A.play();
     playerY = 10;
     playerX = 12;
     for (let x = 0; x < cols; x++){
@@ -834,6 +850,7 @@ function createRoom(){
     }
   }
   else if(state === "chamber3"){
+    c3A.play();
     playerY = 3;
     playerX = 3;
     boxY = 17;
@@ -866,6 +883,7 @@ function createRoom(){
     }
   }
   else if(state === "chamber4"){
+    c4A.play();
     lazerUp = true;
     boxX = 6;
     boxY = 17;
@@ -910,6 +928,7 @@ function createRoom(){
     }
   }
   else if(state === "chamber5"){
+    c5A.play();
     equ = 1;
     playerY = 4;
     playerX = 3;
@@ -940,6 +959,7 @@ function createRoom(){
     }
   }
   else if (state === "chamber6"){
+    c6A.play();
     playerY = 7;
     playerX = 12;
     for (let x = 0; x < cols; x++){
@@ -970,6 +990,7 @@ function createRoom(){
     }
   }
   else if (state === "chamber7"){
+    c7A.play();
     playerY = 7;
     playerX = 12;
     ballX = cols/2;
@@ -1002,6 +1023,7 @@ function createRoom(){
     }
   }
   else if (state === "chamber0.5"){
+    c05A.play();
     playerY = 3;
     playerX = 3;
     ballX = cols/2;

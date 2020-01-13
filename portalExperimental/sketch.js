@@ -21,7 +21,7 @@ let pressed = false;
 let inventory;
 let boxX = 9;
 let boxY = 9;
-let awnswer;
+let answer;
 let lazerUp;
 let equ;
 let ballX;
@@ -51,6 +51,8 @@ function preload(){
   c6A = loadSound("assets/chamber6Audio.mp3");
   c7A = loadSound("assets/chamber7Audio.mp3");
   larry = loadImage("assets/core.png");
+  portalSound.volume = (0.25);
+  buttonSound.volume = (0.25);
 }
 
 //Setup loop where i make the game not explode when it opens
@@ -62,7 +64,7 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber4"
+  state = "chamber0.5"
   grid = createRoom();
   grid[playerY][playerX] = 1;
   portalColor = 1;
@@ -150,6 +152,7 @@ function displayGrid(grid, rows, cols) {
 
 //this is the function for changing chambers and reseting all the buttons
 function door(){
+  //audio.pause();
   orangeX = 1;
   orangeY = 1;
   blueX = 1;
@@ -345,6 +348,8 @@ function ballMove(){
 }
 //this is checking when keys are pressed in each room to move or open buttons
 function keyPressed(){
+  portalSound.setVolume(0.25);
+  buttonSound.setVolume(0.25);
   //these two switch beteen the blue and orange portals
   if(key === "q"){
     portalColor = 1;
@@ -394,7 +399,7 @@ function keyPressed(){
   if (key === 'f'){
     //pay respects
     if(grid[playerY-1][playerX] === "button" || grid[playerY+1][playerX] === "button" || grid[playerY][playerX-1] === "button"|| grid[playerY][playerX+1] === "button"){
-      buttonSound.play();
+        buttonSound.play();
       if(state === "chamber1"){
         if(pressed === false){
           grid[11][6] = "wall";

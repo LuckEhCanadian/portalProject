@@ -152,7 +152,7 @@ function displayGrid(grid, rows, cols) {
 
 //this is the function for changing chambers and reseting all the buttons
 function door(){
-  //audio.pause();
+  c1A.pause();
   orangeX = 1;
   orangeY = 1;
   blueX = 1;
@@ -163,36 +163,44 @@ function door(){
   }
   if(state === "chamber0.5"){
     state = "chamber1"
+    c05A.pause();
     grid = createRoom();
   }
   else if (state === "chamber1"){
     state = "chamber2";
+    c1A.pause();
     grid = createRoom();
   }
   else if(state === 'chamber2'){
     state = "chamber3";
+    c2A.pause();
     grid = createRoom();
   }
   else if(state === 'chamber3'){
     state = "chamber4";
+    c3A.pause();
     playerY = 4;
     playerX = 6;
     grid = createRoom();
   }
   else if(state === "chamber4"){
     state = "chamber5";
+    c4A.pause();
     grid = createRoom();
   }
   else if(state === "chamber5"){
     state = "chamber6";
+    c5A.pause();
     grid = createRoom();
   }
   else if(state === "chamber6"){
     state = "chamber7";
+    c6A.pause();
     grid = createRoom();
   }
   else if(state === "chamber7"){
     state = "chamber 8";
+    c7A.pause();
     grid = createRoom();
   }
 }

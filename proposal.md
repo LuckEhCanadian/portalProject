@@ -23,8 +23,4 @@ I am looking to continue my grid based assignment to make a grid based top down 
 - Lazers
 - Lazer redirection cubes
 - Smoother movement
-<<<<<<< HEAD
 - Some more random stuff i'm probably not going to be able to make opperational
-=======
-- Some more random stuff i'm probably not going to be able to make opperational
->>>>>>> 3d451900dbbe588c615c7b296cfffbbfd21c490e

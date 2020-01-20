@@ -35,6 +35,7 @@ let portalSound;
 let buttonSound;
 let boxArt;
 let larryPlace;
+let winScreen;
 
 function preload(){
   portalSound = loadSound("assets/portalGun.mp3");
@@ -53,6 +54,7 @@ function preload(){
   larry = loadImage("assets/core.png");
   portalSound.volume = (0.25);
   buttonSound.volume = (0.25);
+  winScreen = loadImage("assets/cake.jpg");
 }
 
 //Setup loop where i make the game not explode when it opens
@@ -64,7 +66,7 @@ function setup() {
   else{
     createCanvas(windowHeight, windowHeight);
   }
-  state = "chamber0.5"
+  state = "chamber7"
   grid = createRoom();
   grid[playerY][playerX] = 1;
   portalColor = 1;
@@ -121,6 +123,9 @@ function displayGrid(grid, rows, cols) {
       else if(grid[y][x] === "lazer"){
         fill(154,0,255);
         rect(x*cellSize, y*cellSize, cellSize, cellSize);
+      }
+      else if(grid[y][x] === "cake"){
+        image(winScreen, (boxX*cellSize), (boxY*cellSize), cellSize, cellSize);
       }
       else if(grid[y][x] === "ball"){
         fill("orange");
@@ -199,8 +204,7 @@ function door(){
   }
   else if(state === "chamber7"){
     c7A.pause();
-    state = "chamber 8";
-    grid = createRoom();
+    state = "win";
   }
 }
 
@@ -807,6 +811,14 @@ function keyPressed(){
 
 //this is where i make each different room
 function createRoom(){
+  if(state === "win"){
+    for (let x = 0; x < cols; x++){
+      room.push([]);
+      for(let y = 0; y < rows; y++){
+        room[x].push("cake");
+      }
+    }
+  }
   let room = [];
   if (state === "chamber1"){
     c1A.play();

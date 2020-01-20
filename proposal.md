@@ -11,6 +11,8 @@ I am looking to continue my grid based assignment to make a grid based top down 
 - Multiple chambers
 - Some level of legitimate difficulty
 - GLaDOS voice lines somewhere in there
+- Portals that don't go through walls
+- Portals that only spawn on walls
 
 ## Nice to have
 - Boxes
@@ -18,8 +20,6 @@ I am looking to continue my grid based assignment to make a grid based top down 
 - A menu
 - Win screen including cake
 - Turets that will shoot if you're in thier line of sight
-- Portals that don't go through walls
-- Portals that only spawn on walls
 - Lazers
 - Lazer redirection cubes
 - Smoother movement
